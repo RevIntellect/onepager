@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applause + Instructure | Quality at Scale for Canvas LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Instructure brand */
+    --inst-dark: #156380;
+    --inst-blue: #287A9F;
+    --inst-bright: #0097D3;
+    --inst-orange: #F68E20;
+    --inst-red: #E72429;
+    /* Applause brand */
+    --appl-primary: #0E7DC1;
+    --appl-dark: #0A6BB0;
+    --appl-light: #E7F2F8;
+    /* Shared palette */
+    --brand-primary: #0097D3;
+    --brand-dark: #156380;
+    --brand-light: #E8F4F8;
+    --cta-color: #F68E20;
+    --cta-hover: #E8800A;
+    --bg-primary: #ffffff;
+    --bg-section: #F6FAFB;
+    --bg-dark: #0E3D50;
+    --text-primary: #1b1b1b;
+    --text-secondary: #5a6577;
+    --text-on-dark: #ffffff;
+    --text-muted: #9CA3AF;
+    --text-logo: #404041;
+    --border: #E2E8F0;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.03);
+    --card-shadow-hover: 0 4px 12px rgba(0,151,211,0.1), 0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .nav-brand .applause-logo { height: 20px; }
+  .nav-brand .logo-divider {
+    width: 1px; height: 24px; background: var(--border);
+  }
+  .nav-brand .instructure-logo { height: 18px; }
+  .nav-prepared {
+    font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
+    padding-left: 14px; border-left: 1px solid var(--border);
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-secondary);
+    font-size: 0.82rem; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brand-primary); }
+
+  /* === HERO === */
+  .hero {
+    padding: 110px 40px 72px;
+    background: linear-gradient(160deg, #0E3D50 0%, #156380 40%, #287A9F 75%, #0097D3 100%);
+    color: var(--text-on-dark); position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 520px; height: 520px; border-radius: 50%;
+    background: rgba(246,142,32,0.04);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -20%; left: -5%;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: rgba(255,255,255,0.02);
+  }
+  .hero-inner { max-width: 880px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px; padding: 5px 14px; font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 0.03em; margin-bottom: 22px;
+    color: rgba(255,255,255,0.85);
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--cta-color);
+  }
+  .hero h1 {
+    font-size: 2.65rem; font-weight: 800; line-height: 1.12;
+    margin-bottom: 18px; letter-spacing: -0.025em;
+  }
+  .hero h1 .accent { color: var(--cta-color); }
+  .hero-sub {
+    font-size: 1.08rem; line-height: 1.65; color: rgba(255,255,255,0.78);
+    max-width: 640px; margin-bottom: 36px;
+  }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 560px; }
+  .hero-stat .number {
+    font-size: 1.5rem; font-weight: 800; color: var(--cta-color);
+    line-height: 1; margin-bottom: 3px;
+  }
+  .hero-stat .label { font-size: 0.75rem; color: rgba(255,255,255,0.58); font-weight: 500; }
+
+  /* === SECTIONS === */
+  .section { padding: 64px 40px; max-width: 940px; margin: 0 auto; }
+  .section-alt { background: var(--bg-section); }
+  .section-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--brand-primary); margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 1.6rem; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .section-desc {
+    font-size: 0.92rem; color: var(--text-secondary); max-width: 600px;
+    margin-bottom: 36px; line-height: 1.7;
+  }
+
+  /* === CHALLENGE CARDS === */
+  .challenge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .challenge-card {
+    background: var(--bg-primary); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px 22px; transition: all 0.25s ease;
+  }
+  .challenge-card:hover {
+    box-shadow: var(--card-shadow-hover); transform: translateY(-2px);
+    border-color: var(--brand-primary);
+  }
+  .challenge-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; margin-bottom: 14px;
+  }
+  .challenge-card:nth-child(1) .challenge-icon { background: #FEF3C7; }
+  .challenge-card:nth-child(2) .challenge-icon { background: #FEE2E2; }
+  .challenge-card:nth-child(3) .challenge-icon { background: var(--brand-light); }
+  .challenge-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 7px; }
+  .challenge-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+  .stat-callout {
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+    font-size: 0.78rem; font-weight: 600; color: var(--brand-dark);
+  }
+
+  /* === SIGNAL BAR === */
+  .signal-bar {
+    margin-top: 32px; padding: 20px 24px;
+    background: linear-gradient(135deg, #FFF7ED, #FEF3C7);
+    border: 1px solid #FBBF24; border-radius: 10px;
+  }
+  .signal-bar-title {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #92400E; margin-bottom: 8px;
+  }
+  .signal-bar-quote {
+    font-size: 0.88rem; color: #78350F; line-height: 1.6; font-style: italic;
+  }
+  .signal-bar-source {
+    font-size: 0.7rem; color: #92400E; margin-top: 6px; font-weight: 500;
+  }
+
+  /* === SOLUTION === */
+  .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .solution-card {
+    border-radius: 10px; padding: 24px 22px; background: var(--bg-primary);
+    border: 1px solid var(--border); transition: all 0.25s ease;
+  }
+  .solution-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-2px); }
+  .solution-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--inst-dark); color: white;
+    font-size: 0.82rem; font-weight: 700; margin-bottom: 14px;
+  }
+  .solution-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 7px; }
+  .solution-card p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+  .solution-tag {
+    display: inline-block; margin-top: 12px; padding: 3px 9px;
+    border-radius: 5px; background: var(--brand-light); color: var(--inst-dark);
+    font-size: 0.7rem; font-weight: 600;
+  }
+
+  /* === ROI === */
+  .roi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .roi-card {
+    background: var(--bg-dark); border-radius: 10px; padding: 26px 22px;
+    color: var(--text-on-dark); transition: transform 0.25s ease;
+  }
+  .roi-card:hover { transform: translateY(-2px); }
+  .roi-metric {
+    font-size: 1.85rem; font-weight: 800; color: var(--cta-color);
+    line-height: 1; margin-bottom: 5px;
+  }
+  .roi-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: rgba(255,255,255,0.92); }
+  .roi-desc { font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+  /* === PROOF === */
+  .proof-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+  .proof-item {
+    text-align: center; padding: 18px 10px; border-radius: 8px;
+    background: var(--bg-section); border: 1px solid var(--border);
+  }
+  .proof-value { font-size: 1.2rem; font-weight: 800; color: var(--inst-dark); margin-bottom: 2px; }
+  .proof-desc { font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; }
+
+  /* === CTA === */
+  .cta-section {
+    background: linear-gradient(160deg, #0E3D50 0%, #156380 60%, #287A9F 100%);
+    padding: 56px 40px; text-align: center; color: var(--text-on-dark);
+  }
+  .cta-section h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; }
+  .cta-section p {
+    font-size: 0.92rem; color: rgba(255,255,255,0.7);
+    max-width: 520px; margin: 0 auto 28px; line-height: 1.65;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--cta-color); color: #0E3D50; text-decoration: none;
+    font-weight: 700; font-size: 0.92rem; padding: 13px 28px;
+    border-radius: 8px; transition: all 0.2s ease; border: none; cursor: pointer;
+  }
+  .cta-btn:hover {
+    background: #FFA033; transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(246,142,32,0.3);
+  }
+  .cta-contact {
+    margin-top: 16px; font-size: 0.78rem; color: rgba(255,255,255,0.5);
+  }
+  .cta-contact a { color: var(--cta-color); text-decoration: none; }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 20px 40px; text-align: center; font-size: 0.72rem;
+    color: var(--text-muted); border-top: 1px solid var(--border);
+  }
+  .footer-logos {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .footer-logos svg { height: 14px; opacity: 0.45; }
+  .footer-logos .divider { width: 1px; height: 16px; background: var(--border); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero { padding: 96px 24px 56px; }
+    .hero h1 { font-size: 1.9rem; }
+    .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .hero-stat .number { font-size: 1.2rem; }
+    .section { padding: 44px 24px; }
+    .challenge-grid, .solution-grid { grid-template-columns: 1fr; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .proof-bar { grid-template-columns: repeat(2, 1fr); }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .nav-prepared { display: none; }
+  }
+
+  /* === SCROLL ANIMATION === */
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <!-- Applause Logo -->
+    <svg class="applause-logo" viewBox="0 0 251.24 39.94" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#404041"><path d="m.07 38.63 11.2-24.55a.86.86 0 0 1 .62-.4h.37a.86.86 0 0 1 .62.4l11.12 24.55a.64.64 0 0 1 -.62.94h-2.3a.84.84 0 0 1 -.84-.54l-2.24-5.03h-11.94c-.73 1.68-1.5 3.32-2.23 5a.92.92 0 0 1 -.84.54h-2.3a.64.64 0 0 1 -.62-.94m16.52-7.7-4.49-10h-.18l-4.45 10z"/><path d="m33.79 14.74a.69.69 0 0 1 .69-.69h8.32a8.13 8.13 0 1 1 0 16.26h-5.25v8.56a.71.71 0 0 1 -.69.69h-2.37a.69.69 0 0 1 -.69-.69zm8.79 12a4.64 4.64 0 0 0 4.63-4.67 4.49 4.49 0 0 0 -4.63-4.37h-5v9z"/><path d="m62.76 14.74a.69.69 0 0 1 .69-.69h8.31a8.13 8.13 0 1 1 0 16.26h-5.25v8.56a.72.72 0 0 1 -.69.69h-2.37a.69.69 0 0 1 -.69-.69zm8.79 12a4.65 4.65 0 0 0 4.63-4.67 4.49 4.49 0 0 0 -4.63-4.37h-5v9z"/><path d="m91.73 14.74a.69.69 0 0 1 .69-.69h2.41a.71.71 0 0 1 .69.69v21.44h9.88a.69.69 0 0 1 .69.7v2a.69.69 0 0 1 -.69.69h-13a.69.69 0 0 1 -.69-.69z"/><path d="m114.26 38.63 11.19-24.54a.86.86 0 0 1 .62-.4h.37a.86.86 0 0 1 .62.4l11.12 24.54a.64.64 0 0 1 -.62.94h-2.3a.83.83 0 0 1 -.84-.54l-2.26-5h-11.91c-.73 1.68-1.5 3.32-2.23 5a.92.92 0 0 1 -.84.54h-2.3a.64.64 0 0 1 -.62-.94m16.52-7.73-4.48-10h-.18l-4.45 10z"/><path d="m146.87 14.74a.71.71 0 0 1 .69-.69h2.44a.69.69 0 0 1 .69.69v15.06c0 3.64 2.33 6.49 6.05 6.49s6.12-2.81 6.12-6.41v-15.14a.69.69 0 0 1 .7-.69h2.44a.72.72 0 0 1 .69.69v15.32a9.92 9.92 0 0 1 -19.84 0z"/><path d="m179.12 35.89c.33-.47.62-1 .95-1.5a.82.82 0 0 1 1.24-.29c.22.18 3 2.52 5.84 2.52 2.52 0 4.12-1.53 4.12-3.39 0-2.19-1.9-3.57-5.51-5.07s-6.63-3.5-6.63-7.73c0-2.84 2.18-6.74 8-6.74a12.32 12.32 0 0 1 6.75 2.16.86.86 0 0 1 .22 1.23l-.91 1.39a.86.86 0 0 1 -1.28.36c-.26-.14-2.81-1.82-4.92-1.82-3.06 0-4.12 1.94-4.12 3.29 0 2.07 1.6 3.36 4.63 4.59 4.23 1.71 7.84 3.72 7.84 8.17 0 3.79-3.39 6.89-8.13 6.89a11.82 11.82 0 0 1 -7.84-2.88c-.33-.3-.59-.55-.22-1.17"/><path d="m207.65 14.74a.69.69 0 0 1 .69-.69h14.59a.69.69 0 0 1 .69.69v2a.69.69 0 0 1 -.69.69h-11.52v7.44h9.74a.72.72 0 0 1 .69.69v2a.69.69 0 0 1 -.69.7h-9.74v7.83h11.52a.69.69 0 0 1 .69.7v2a.69.69 0 0 1 -.69.69h-14.59a.69.69 0 0 1 -.69-.69z"/></g><path d="m242.53 3.3a5.41 5.41 0 1 1 -5.41 5.41 5.41 5.41 0 0 1 5.41-5.41m0-3.3a8.7 8.7 0 1 0 8.7 8.7 8.7 8.7 0 0 0 -8.7-8.7z" fill="#0e7dc1"/></svg>
+    <div class="logo-divider"></div>
+    <!-- Instructure Logo -->
+    <svg class="instructure-logo" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg"><path d="m66.64 37.52-44.42-25.02 22.2-12.5 22.22 12.51 22.21 12.5zm-22.21-12.51-22.21 12.51-22.22-12.51 22.21-12.5zm-44.43 50.04 44.43-25.02 44.43 25.02-44.43 25.01zm133.59 11.77v-74.41h12.33v74.41zm34.02 0v-74.41h12.33l15.63 46v-46h11.27v74.41h-11.7l-16.26-48.37v48.37zm148.09-63.57h-12.44v63.57h-12.33v-63.57h-12.44v-10.84h37.21zm44.97 63.57-9.47-29.66h-6.2v29.66h-12.29v-74.41h19.29c11.27 0 18.71 4.46 18.71 15.73v13.29c0 7.12-3 11.59-8.08 13.82l10.63 31.57zm-15.67-40.29h6.48c4 0 6.81-1.49 6.81-6.8v-9.68c0-5.31-2.77-6.8-6.81-6.8h-6.48zm83.17 25.41c0 11.48-7.23 15.73-18.5 15.73h-.42c-11.27 0-18.5-4.14-18.5-15.73v-59.53h12.33v57.59c0 5.31 2.34 6.8 6.38 6.8s6.38-1.49 6.38-6.8v-57.59h12.33zm58.26 0c0 11.48-7.44 15.73-18.71 15.73h-.21c-11.27 0-18.71-4.14-18.71-15.73v-44.65c0-11.06 7.44-15.73 18.71-15.73h.21c11.27 0 18.71 4.67 18.71 15.73v8.61h-12.33v-6.7c0-5.21-2.55-6.8-6.49-6.8s-6.48 1.59-6.48 6.8v40.8c0 5.2 2.55 6.8 6.48 6.8s6.49-1.6 6.49-6.8v-8.48h12.33zm52.94-48.69h-12.44v63.57h-12.33v-63.57h-12.44v-10.84h37.21zm54.22 48.69c0 11.48-7.23 15.73-18.5 15.73h-.43c-11.26 0-18.49-4.14-18.49-15.73v-59.53h12.33v57.59c0 5.31 2.34 6.8 6.38 6.8s6.38-1.49 6.38-6.8v-57.59h12.33zm49.01 14.88-9.47-29.66h-6.13v29.66h-12.36v-74.41h19.24c11.27 0 18.71 4.46 18.71 15.73v13.29c0 7.12-3 11.59-8.08 13.82l10.63 31.57zm-15.6-40.29h6.48c4 0 6.81-1.49 6.81-6.8v-9.68c0-5.31-2.77-6.8-6.81-6.8h-6.48zm-375.73-12.53v-5.43c0-4.68-2.65-6.38-6.27-6.38s-6.27 1.7-6.27 6.38v5.1c0 3.83 1.27 5.53 4.78 7.55l8.72 4.89c7.12 4 11.38 7.33 11.38 15.31v10.73c0 11.48-7.13 15.52-18.4 15.52h-.21c-11.27 0-18.39-3.93-18.39-15.52v-8h12.12v6.27c0 4.57 2.66 6.59 6.38 6.59s6.38-2 6.38-6.59v-5.82c0-3.82-1.17-5.74-4.89-7.76l-8.6-4.84c-7.23-4.14-11.38-7.54-11.38-15.31v-9.83c0-11 8.08-15.3 18.29-15.3h.21c10.2 0 18.28 4.25 18.28 15.3v7.14zm421.94 52.78v-74.37h32.62v10.83h-20.29v20.4h16.99v10.84h-16.99v21.46h20.61v10.84z" transform="matrix(.708065 0 0 .708065 30 164.576)" fill="#156380"/></svg>
+    <span class="nav-prepared">Prepared for Instructure</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#challenge">Challenge</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#next">Next Steps</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      EdTech Quality Partnership
+    </div>
+    <h1>
+      200 Million Learners.<br>
+      <span class="accent">Every Device. Every Country.</span>
+    </h1>
+    <p class="hero-sub">
+      Canvas LMS is the #1 learning platform globally, powering education in 100 countries. When enrollment surges hit and your Trustpilot reviews start telling a different story than your uptime dashboard, the gap isn't in your code. It's in your test coverage.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="number">300K+</div>
+        <div class="label">Real-device testers</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">200+</div>
+        <div class="label">Device/OS combos per cycle</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">48hr</div>
+        <div class="label">Regression turnaround</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE -->
+<div id="challenge" class="section-alt">
+  <section class="section">
+    <div class="section-label">The Challenge</div>
+    <h2 class="section-title">The Gaps Between Your Dashboard and Your Users</h2>
+    <p class="section-desc">
+      Canvas serves K-12 through higher education across 100 countries, running on every device from locked-down Chromebooks to faculty MacBooks on campus Wi-Fi. The testing surface area is orders of magnitude larger than any internal team can cover.
+    </p>
+    <div class="challenge-grid">
+      <div class="challenge-card reveal">
+        <div class="challenge-icon">&#127760;</div>
+        <h3>Global Device Fragmentation</h3>
+        <p>200M learners access Canvas on every browser, OS, and hardware combination imaginable. K-12 districts run locked Chromebooks with unique network policies. Higher ed runs BYOD. Emulators cannot replicate these real-world conditions.</p>
+        <div class="stat-callout">100 countries &middot; 38% NA market share</div>
+      </div>
+      <div class="challenge-card reveal">
+        <div class="challenge-icon">&#9878;&#65039;</div>
+        <h3>Accessibility as a Procurement Gate</h3>
+        <p>Institutional buyers require VPATs before signing. The European Accessibility Act is now in enforcement. ADA Title II digital requirements take effect in 2026. Automated scans catch only ~30% of real-world violations.</p>
+        <div class="stat-callout">WCAG 2.2 &middot; Section 508 &middot; EAA</div>
+      </div>
+      <div class="challenge-card reveal">
+        <div class="challenge-icon">&#128200;</div>
+        <h3>KKR Efficiency Mandate</h3>
+        <p>Private equity ownership means every dollar of QA spend needs to demonstrate ROI. Scaling internal QA headcount is a cost center. The challenge: increase coverage and quality while reducing per-test cost.</p>
+        <div class="stat-callout">$634M ARR &middot; Path to $1B by 2028</div>
+      </div>
+    </div>
+
+    <div class="signal-bar reveal">
+      <div class="signal-bar-title">Signal: What Students Are Saying</div>
+      <div class="signal-bar-quote">
+        "Server gateway timeout constantly." "Marks things incorrect even when you get them correct." The bugs students report are not the ones automation catches.
+      </div>
+      <div class="signal-bar-source">Source: Public user reviews (Trustpilot, App Store)</div>
+    </div>
+  </section>
+</div>
+
+<!-- SOLUTION -->
+<section id="solution" class="section">
+  <div class="section-label">How Applause Solves This</div>
+  <h2 class="section-title">Coverage That Matches Canvas Scale</h2>
+  <p class="section-desc">
+    Instead of a fixed QA team covering a fraction of your device matrix, deploy hundreds of domain-matched testers across real devices, real networks, and real assistive technology.
+  </p>
+  <div class="solution-grid">
+    <div class="solution-card reveal">
+      <div class="solution-number">1</div>
+      <h3>Real-Device Functional Testing</h3>
+      <p>300K+ testers on real devices in real network conditions. School-managed Chromebooks, university lab machines, BYOD phones on campus Wi-Fi. Every device your learners actually use.</p>
+      <span class="solution-tag">LMS &middot; LTI &middot; SCORM workflows</span>
+    </div>
+    <div class="solution-card reveal">
+      <div class="solution-number">2</div>
+      <h3>Crowdsourced Accessibility Audits</h3>
+      <p>Not automated scans. Actual blind users with JAWS and NVDA. Motor-impaired users with switch controls. Results map directly to WCAG 2.2 success criteria for your institutional VPATs.</p>
+      <span class="solution-tag">Real assistive tech users</span>
+    </div>
+    <div class="solution-card reveal">
+      <div class="solution-number">3</div>
+      <h3>On-Demand Elastic Scaling</h3>
+      <p>Ramp to 500+ testers for enrollment windows and major releases. Scale back to maintenance between semesters. Zero hiring, zero ramp-up, zero fixed cost.</p>
+      <span class="solution-tag">PE-friendly cost model</span>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<div id="impact" class="section-alt">
+  <section class="section">
+    <div class="section-label">Projected Impact</div>
+    <h2 class="section-title">The Numbers That Close the Case</h2>
+    <p class="section-desc">
+      Quantified outcomes based on EdTech engagements at comparable scale and complexity.
+    </p>
+    <div class="roi-grid">
+      <div class="roi-card reveal">
+        <div class="roi-metric">80%</div>
+        <div class="roi-label">Faster Regression Cycles</div>
+        <div class="roi-desc">From 5-10 business days to 24-48 hours per release. Ship faster without shipping the bugs students are already reporting.</div>
+      </div>
+      <div class="roi-card reveal">
+        <div class="roi-metric">10x</div>
+        <div class="roi-label">Device Coverage Increase</div>
+        <div class="roi-desc">From 20-30 manual combos to 200+ real-device configs tested every cycle. Cover the K-12 Chromebook matrix that emulators can't.</div>
+      </div>
+      <div class="roi-card reveal">
+        <div class="roi-metric">90%</div>
+        <div class="roi-label">VPAT-Ready Accessibility</div>
+        <div class="roi-desc">Up from ~30% with automated scans. Real assistive tech users find the violations that block institutional procurement decisions.</div>
+      </div>
+      <div class="roi-card reveal">
+        <div class="roi-metric">$1M+</div>
+        <div class="roi-label">Engineering Capacity Recovered</div>
+        <div class="roi-desc">20% of sprint capacity freed from regression and hotfixes. Redirected to the product roadmap that gets Canvas to $1B ARR.</div>
+      </div>
+    </div>
+
+    <div class="proof-bar">
+      <div class="proof-item">
+        <div class="proof-value">300K+</div>
+        <div class="proof-desc">Global testers</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-value">15+</div>
+        <div class="proof-desc">Years in market</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-value">1M+</div>
+        <div class="proof-desc">Real devices</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-value">4,000+</div>
+        <div class="proof-desc">Enterprise clients</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<section id="next" class="cta-section">
+  <h2>Let's Close the Coverage Gap</h2>
+  <p>
+    Send us your top 10 critical Canvas user flows. We'll run them across 50 real device/OS/browser combinations in 48 hours and show you what your automation is missing.
+  </p>
+  <a href="mailto:aaron@revintellect.com?subject=Instructure%20%2B%20Applause%20QA%20Pilot" class="cta-btn">
+    Schedule a Readiness Assessment
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="cta-contact">
+    Aaron Wolf &middot; <a href="mailto:aaron@revintellect.com">aaron@revintellect.com</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logos">
+    <svg viewBox="0 0 251.24 39.94" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#9CA3AF"><path d="m.07 38.63 11.2-24.55a.86.86 0 0 1 .62-.4h.37a.86.86 0 0 1 .62.4l11.12 24.55a.64.64 0 0 1 -.62.94h-2.3a.84.84 0 0 1 -.84-.54l-2.24-5.03h-11.94c-.73 1.68-1.5 3.32-2.23 5a.92.92 0 0 1 -.84.54h-2.3a.64.64 0 0 1 -.62-.94m16.52-7.7-4.49-10h-.18l-4.45 10z"/><path d="m33.79 14.74a.69.69 0 0 1 .69-.69h8.32a8.13 8.13 0 1 1 0 16.26h-5.25v8.56a.71.71 0 0 1 -.69.69h-2.37a.69.69 0 0 1 -.69-.69zm8.79 12a4.64 4.64 0 0 0 4.63-4.67 4.49 4.49 0 0 0 -4.63-4.37h-5v9z"/><path d="m62.76 14.74a.69.69 0 0 1 .69-.69h8.31a8.13 8.13 0 1 1 0 16.26h-5.25v8.56a.72.72 0 0 1 -.69.69h-2.37a.69.69 0 0 1 -.69-.69zm8.79 12a4.65 4.65 0 0 0 4.63-4.67 4.49 4.49 0 0 0 -4.63-4.37h-5v9z"/><path d="m91.73 14.74a.69.69 0 0 1 .69-.69h2.41a.71.71 0 0 1 .69.69v21.44h9.88a.69.69 0 0 1 .69.7v2a.69.69 0 0 1 -.69.69h-13a.69.69 0 0 1 -.69-.69z"/><path d="m114.26 38.63 11.19-24.54a.86.86 0 0 1 .62-.4h.37a.86.86 0 0 1 .62.4l11.12 24.54a.64.64 0 0 1 -.62.94h-2.3a.83.83 0 0 1 -.84-.54l-2.26-5h-11.91c-.73 1.68-1.5 3.32-2.23 5a.92.92 0 0 1 -.84.54h-2.3a.64.64 0 0 1 -.62-.94m16.52-7.73-4.48-10h-.18l-4.45 10z"/><path d="m146.87 14.74a.71.71 0 0 1 .69-.69h2.44a.69.69 0 0 1 .69.69v15.06c0 3.64 2.33 6.49 6.05 6.49s6.12-2.81 6.12-6.41v-15.14a.69.69 0 0 1 .7-.69h2.44a.72.72 0 0 1 .69.69v15.32a9.92 9.92 0 0 1 -19.84 0z"/><path d="m179.12 35.89c.33-.47.62-1 .95-1.5a.82.82 0 0 1 1.24-.29c.22.18 3 2.52 5.84 2.52 2.52 0 4.12-1.53 4.12-3.39 0-2.19-1.9-3.57-5.51-5.07s-6.63-3.5-6.63-7.73c0-2.84 2.18-6.74 8-6.74a12.32 12.32 0 0 1 6.75 2.16.86.86 0 0 1 .22 1.23l-.91 1.39a.86.86 0 0 1 -1.28.36c-.26-.14-2.81-1.82-4.92-1.82-3.06 0-4.12 1.94-4.12 3.29 0 2.07 1.6 3.36 4.63 4.59 4.23 1.71 7.84 3.72 7.84 8.17 0 3.79-3.39 6.89-8.13 6.89a11.82 11.82 0 0 1 -7.84-2.88c-.33-.3-.59-.55-.22-1.17"/><path d="m207.65 14.74a.69.69 0 0 1 .69-.69h14.59a.69.69 0 0 1 .69.69v2a.69.69 0 0 1 -.69.69h-11.52v7.44h9.74a.72.72 0 0 1 .69.69v2a.69.69 0 0 1 -.69.7h-9.74v7.83h11.52a.69.69 0 0 1 .69.7v2a.69.69 0 0 1 -.69.69h-14.59a.69.69 0 0 1 -.69-.69z"/></g><path d="m242.53 3.3a5.41 5.41 0 1 1 -5.41 5.41 5.41 5.41 0 0 1 5.41-5.41m0-3.3a8.7 8.7 0 1 0 8.7 8.7 8.7 8.7 0 0 0 -8.7-8.7z" fill="#9CA3AF"/></svg>
+    <div class="divider"></div>
+    <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg"><path d="m66.64 37.52-44.42-25.02 22.2-12.5 22.22 12.51 22.21 12.5zm-22.21-12.51-22.21 12.51-22.22-12.51 22.21-12.5zm-44.43 50.04 44.43-25.02 44.43 25.02-44.43 25.01zm133.59 11.77v-74.41h12.33v74.41zm34.02 0v-74.41h12.33l15.63 46v-46h11.27v74.41h-11.7l-16.26-48.37v48.37zm148.09-63.57h-12.44v63.57h-12.33v-63.57h-12.44v-10.84h37.21zm44.97 63.57-9.47-29.66h-6.2v29.66h-12.29v-74.41h19.29c11.27 0 18.71 4.46 18.71 15.73v13.29c0 7.12-3 11.59-8.08 13.82l10.63 31.57zm-15.67-40.29h6.48c4 0 6.81-1.49 6.81-6.8v-9.68c0-5.31-2.77-6.8-6.81-6.8h-6.48zm83.17 25.41c0 11.48-7.23 15.73-18.5 15.73h-.42c-11.27 0-18.5-4.14-18.5-15.73v-59.53h12.33v57.59c0 5.31 2.34 6.8 6.38 6.8s6.38-1.49 6.38-6.8v-57.59h12.33zm58.26 0c0 11.48-7.44 15.73-18.71 15.73h-.21c-11.27 0-18.71-4.14-18.71-15.73v-44.65c0-11.06 7.44-15.73 18.71-15.73h.21c11.27 0 18.71 4.67 18.71 15.73v8.61h-12.33v-6.7c0-5.21-2.55-6.8-6.49-6.8s-6.48 1.59-6.48 6.8v40.8c0 5.2 2.55 6.8 6.48 6.8s6.49-1.6 6.49-6.8v-8.48h12.33zm52.94-48.69h-12.44v63.57h-12.33v-63.57h-12.44v-10.84h37.21zm54.22 48.69c0 11.48-7.23 15.73-18.5 15.73h-.43c-11.26 0-18.49-4.14-18.49-15.73v-59.53h12.33v57.59c0 5.31 2.34 6.8 6.38 6.8s6.38-1.49 6.38-6.8v-57.59h12.33zm49.01 14.88-9.47-29.66h-6.13v29.66h-12.36v-74.41h19.24c11.27 0 18.71 4.46 18.71 15.73v13.29c0 7.12-3 11.59-8.08 13.82l10.63 31.57zm-15.6-40.29h6.48c4 0 6.81-1.49 6.81-6.8v-9.68c0-5.31-2.77-6.8-6.81-6.8h-6.48zm-375.73-12.53v-5.43c0-4.68-2.65-6.38-6.27-6.38s-6.27 1.7-6.27 6.38v5.1c0 3.83 1.27 5.53 4.78 7.55l8.72 4.89c7.12 4 11.38 7.33 11.38 15.31v10.73c0 11.48-7.13 15.52-18.4 15.52h-.21c-11.27 0-18.39-3.93-18.39-15.52v-8h12.12v6.27c0 4.57 2.66 6.59 6.38 6.59s6.38-2 6.38-6.59v-5.82c0-3.82-1.17-5.74-4.89-7.76l-8.6-4.84c-7.23-4.14-11.38-7.54-11.38-15.31v-9.83c0-11 8.08-15.3 18.29-15.3h.21c10.2 0 18.28 4.25 18.28 15.3v7.14zm421.94 52.78v-74.37h32.62v10.83h-20.29v20.4h16.99v10.84h-16.99v21.46h20.61v10.84z" transform="matrix(.708065 0 0 .708065 30 164.576)" fill="#9CA3AF"/></svg>
+  </div>
+  Prepared by Applause &middot; February 2026 &middot; Confidential
+</footer>
+
+<script>
+  // Scroll-triggered reveal animations
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href'))
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
